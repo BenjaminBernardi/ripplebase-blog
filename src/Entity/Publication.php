@@ -40,10 +40,20 @@ class Publication
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'publication')]
     private Collection $comments;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $releasedAt = null;
+
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'publications')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->ratings = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,6 +165,42 @@ class Publication
                 $comment->setPublication(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReleasedAt(): ?\DateTime
+    {
+        return $this->releasedAt;
+    }
+
+    public function setReleasedAt(?\DateTime $releasedAt): static
+    {
+        $this->releasedAt = $releasedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }
