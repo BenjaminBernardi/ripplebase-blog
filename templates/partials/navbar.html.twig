@@ -3,19 +3,19 @@
         <img src="/assets/img/rbase_logo.png" width="30" height="30" alt="Ripplebase logo" class="m-lg-2">
     </a>
     <div class="d-flex justify-content-end">
-        {#        {% if app.user %} #}
-        {#            <p class="m-lg-2">Bienvenue {{ app.user.name }} !</p> #}
-        {#            <a href={{ path('app_logout') }}> #}
-        {#                <button class="btn btn-primary">Se deconnecter</button> #}
-        {#            </a> #}
-        {#        {% else %} #}
-        {#            <a href={{ path('app_register') }}> #}
-        {#                <button class="btn btn-warning">S'inscrire</button> #}
-        {#            </a> #}
-        {#            <a href={{ path('app_login') }}> #}
-        {#                <button class="btn btn-primary">Se connecter</button> #}
-        {#            </a> #}
-        {#        {% endif %} #}
+        {% if app.user %}
+            <p class="m-lg-2">Bienvenue {{ app.user.username }} !</p>
+            <a href={{ path('app_logout') }}>
+                <button class="btn btn-primary mx-1">Se deconnecter</button>
+            </a>
+        {% else %}
+            <a href={{ path('app_register') }}>
+                <button class="btn btn-warning mx-1">S'inscrire</button>
+            </a>
+            <a href={{ path('app_login') }}>
+                <button class="btn btn-primary mx-1">Se connecter</button>
+            </a>
+        {% endif %}
     </div>
     {% block header %}{% endblock %}
 </nav>

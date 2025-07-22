@@ -1,0 +1,47 @@
+{% extends 'base.admin.html.twig' %}
+
+{% block title %}Gérer les publications{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Liste des publications</h1>
+        <div class="row">
+            <table class="table table-responsive">
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Action</th>
+                </tr>
+                {% for game in games %}
+                    <tr>
+                        <td>{{ game.name }}</td>
+                        <td>{{ game.price|euro }}</td>
+                        <td>{{ game.publishedAt|date("d/m/Y") }}</td>
+                        <td>{{ game.description|short_description }}</td>
+                        <td>{{ game|get_rating_avg }}</td>
+                        <td>
+                            <div class="d-flex flex-row">
+                                <a href={{ path('app_admin_game-edit', {'slug': game.slug}) }}>
+                                    <button class="btn btn-primary">Editer</button>
+                                </a>
+                                <a href={{ path('app_show_game', {'slug': game.slug }) }}>
+                                    <button class="btn btn-primary">Voir</button>
+                                </a>
+                                <a href={{ path('app_admin_delete-game', {'slug': game.slug }) }}>
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(games) }}
+        </div>
+    </div>
+{% endblock %}

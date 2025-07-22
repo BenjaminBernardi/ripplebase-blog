@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Ripplebase Blog{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('style') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('script') }}
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+    <p>Panneau d'administration</p>
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+{% block footer %}
+    <p class="text-center">Ripplebase</p>
+{% endblock %}
+</body>
+</html>
