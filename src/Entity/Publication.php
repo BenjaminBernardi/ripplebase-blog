@@ -46,8 +46,10 @@ class Publication
     /**
      * @var Collection<int, Category>
      */
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'publications')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'publications', cascade: ['persist'])]
     private Collection $categories;
+
+
 
     public function __construct()
     {
@@ -204,4 +206,5 @@ class Publication
 
         return $this;
     }
+
 }

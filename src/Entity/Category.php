@@ -24,6 +24,7 @@ class Category
     #[ORM\ManyToMany(targetEntity: Publication::class, mappedBy: 'categories')]
     private Collection $publications;
 
+
     public function __construct()
     {
         $this->publications = new ArrayCollection();

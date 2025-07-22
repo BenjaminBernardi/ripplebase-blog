@@ -2,17 +2,17 @@
 
 namespace App\Factory;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Entity\Publication;
+use App\Repository\PublicationRepository;
 use Doctrine\ORM\EntityRepository;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use Zenstruck\Foundry\Persistence\Proxy;
 use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
 
 /**
- * @extends PersistentProxyObjectFactory<User>
+ * @extends PersistentProxyObjectFactory<Publication>
  */
-final class UserFactory extends PersistentProxyObjectFactory{
+final class PublicationFactory extends PersistentProxyObjectFactory{
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -24,7 +24,7 @@ final class UserFactory extends PersistentProxyObjectFactory{
 
     public static function class(): string
     {
-        return User::class;
+        return Publication::class;
     }
 
         /**
@@ -35,10 +35,11 @@ final class UserFactory extends PersistentProxyObjectFactory{
     protected function defaults(): array|callable    {
         return [
             'createdAt' => self::faker()->dateTime(),
-            'email' => self::faker()->email(),
-            'password' => self::faker()->text(),
-            'roles' => [],
-            'username' => self::faker()->text(100),
+            'description' => self::faker()->text(),
+            'title' => self::faker()->text(255),
+            'imagePath' => self::faker()->imageUrl(),
+            'releasedAt' => self::faker()->dateTimeBetween('+1 week', '+2 week'),
+            'categories' => CategoryFactory::random(),
         ];
     }
 
@@ -48,7 +49,7 @@ final class UserFactory extends PersistentProxyObjectFactory{
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(User $user): void {})
+            // ->afterInstantiate(function(Publication $publication): void {})
         ;
     }
 }
