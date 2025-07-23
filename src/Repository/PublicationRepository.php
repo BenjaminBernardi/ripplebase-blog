@@ -16,9 +16,9 @@ class PublicationRepository extends ServiceEntityRepository
         parent::__construct($registry, Publication::class);
     }
 
-    public function getAll()
+    public function getAll(): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'DESC');
+            ->orderBy('p.releasedAt', 'DESC');
     }
 }

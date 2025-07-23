@@ -18,15 +18,15 @@ final class AdminPublicationController extends AbstractController
         Request               $request
     ): Response
     {
-        $publication = $paginator->paginate(
-            $publicationRepository->getAll(), // Order by id DESC
+        $publications = $paginator->paginate(
+            $publicationRepository->getAll(), // Join Category Order by releasedAt DESC
             $request->query->getInt('page', 1),
             10
         );
 
         return $this->render('admin_publication/index.html.twig', [
             'controller_name' => 'AdminPublicationController',
-            'publication' => $publication
+            'publications' => $publications
         ]);
     }
 }
