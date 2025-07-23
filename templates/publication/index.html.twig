@@ -6,9 +6,38 @@
 
     {% include 'partials/navbar.html.twig' %}
     <div class="container">
-        <h2>{{ publication.title }}</h2>
-        <img class="img-fluid rounded-top-5" src={{ publication.imagePath }} alt={{ publication.title }}>
-        <p>{{ publication.description }}</p>
+        <section>
+            <h2 class="mb-4">{{ publication.title }}</h2>
+            <img class="img-fluid rounded-top-5" src="{{ publication.imagePath }}" alt="{{ publication.title }}">
+            <p class="mt-2">Catégorie :
+                {% for categorie in publication.categories %}
+                    {{ categorie.tag }}
+                {% endfor %}
+            </p>
+            <article class="mt-2">{{ publication.description }}</article>
+        </section>
+        <section class="mt-2">
+            {% for comment in publication.comments %}
+                <div class="card bg-dark bg-gradient mb-1">
+                    <div class="row g-0">
+                        <div class="col-md-2 p-2 rounded-start bg-warning text-dark">
+                            <p>{{ comment.user.username }}</p>
+                            <p>Membre depuis le : {{ comment.user.createdAt|date("d/m/Y") }}</p>
+                        </div>
+                        <div class="col-md-10 text-light">
+                            <div class="card-body">
+                                <p>{{ comment.description }}</p>
+                                {% for rating in comment.user.ratings %}
+                                    {% if rating.publication.id == publication.id %}
+                                        <p>Note de l'évènement : {{ rating.notation }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
     </div>
 
 {% endblock %}
