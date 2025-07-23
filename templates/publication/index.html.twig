@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publication{% endblock %}
+
+{% block body %}
+
+    {% include 'partials/navbar.html.twig' %}
+    <div class="container">
+        <h2>{{ publication.title }}</h2>
+        <img class="img-fluid rounded-top-5" src={{ publication.imagePath }} alt={{ publication.title }}>
+        <p>{{ publication.description }}</p>
+    </div>
+
+{% endblock %}
