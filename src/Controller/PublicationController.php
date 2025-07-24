@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +31,23 @@ final class PublicationController extends AbstractController
         return $this->render('publication/index.html.twig', [
             'id' => $publication->getId(),
             'publication' => $publication,
+        ]);
+    }
+
+    #[Route('/genre/{slug}', name: 'app_category')]
+    public function publicationCategory(
+        string             $slug,
+        CategoryRepository $categoryRepository
+    ): Response
+    {
+        $category = $categoryRepository->findFullBySlug($slug);
+        if ($category === null) {
+            $this->addFlash('danger', 'Ce genre n\'existe pas !');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('', [
+            'category' => $category,
         ]);
     }
 }
