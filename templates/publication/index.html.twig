@@ -9,7 +9,7 @@
         <section>
             <h2 class="mb-4">{{ publication.title }}</h2>
             <img class="img-fluid rounded-top-5" src="{{ publication.imagePath }}" alt="{{ publication.title }}">
-            <p class="mt-2">Catégorie :
+            <p class="mt-2">Genre :
                 {% for categorie in publication.categories %}
                     {{ categorie.tag }}
                 {% endfor %}

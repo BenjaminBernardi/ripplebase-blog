@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}A propos{% endblock %}
+
+{% block body %}
+
+    {% include 'partials/navbar.html.twig' %}
+    <div class="container">
+        <h2 class="mb-4">Qui sommes nous ?</h2>
+        <img class="img-fluid rounded-top-5" src="" alt="">
+        <article class="mt-2">{{ publication.description }}</article>
+    </div>
+
+{% endblock %}
