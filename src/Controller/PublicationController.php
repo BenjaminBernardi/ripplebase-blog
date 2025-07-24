@@ -10,6 +10,7 @@ use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 final class PublicationController extends AbstractController
 {
@@ -37,7 +38,7 @@ final class PublicationController extends AbstractController
     #[Route('/genre/{slug}', name: 'app_category')]
     public function publicationCategory(
         string             $slug,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
     ): Response
     {
         $category = $categoryRepository->findFullBySlug($slug);
@@ -46,7 +47,7 @@ final class PublicationController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('', [
+        return $this->render('publication/publications_by_category.html.twig', [
             'category' => $category,
         ]);
     }

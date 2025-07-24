@@ -18,6 +18,9 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $tag = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $slug = null;
+
     /**
      * @var Collection<int, Publication>
      */
@@ -43,6 +46,18 @@ class Category
     public function setTag(string $tag): static
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }
