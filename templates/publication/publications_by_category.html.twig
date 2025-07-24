@@ -8,17 +8,20 @@
     <div class="container">
         {% for publication in category.publications %}
             <div class="card bg-dark bg-gradient mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4 p-2 rounded-start">
-                        <img class="img-fluid rounded" src="{{ publication.imagePath }}" alt="{{ publication.title }}">
-                    </div>
-                    <div class="col-md-8 text-light">
-                        <div class="card-body">
-                            <h4>{{ publication.title }}</h4>
-                            <p><i>Date de publication : {{ publication.releasedAt|date("d/m/Y") }}</i></p>
+                <a class="card-link" href="{{ path('app_show_publication', {'id': publication.id }) }}">
+                    <div class="row g-0">
+                        <div class="col-md-4 p-2">
+                            <img class="img-fluid rounded" src="{{ publication.imagePath }}"
+                                 alt="{{ publication.title }}">
+                        </div>
+                        <div class="col-md-8 text-light">
+                            <div class="card-body">
+                                <h4>{{ publication.title }}</h4>
+                                <p><i>Date de publication : {{ publication.releasedAt|date("d/m/Y") }}</i></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         {% endfor %}
     </div>

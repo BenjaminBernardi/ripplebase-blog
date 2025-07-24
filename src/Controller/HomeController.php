@@ -19,7 +19,7 @@ final class HomeController extends AbstractController
 
         $lastPublications = $publicationRepository->findBy(
             [],
-            ['createdAt' => 'DESC'],
+            ['releasedAt' => 'DESC'],
             3
         );
 

@@ -8,15 +8,15 @@
                 <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false"
                 >
                     Genres
                 </a>
                 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item text-warning" href="#">Hardstyle</a>
-                    <a class="dropdown-item text-warning" href="#">Hard Trance</a>
-                    <a class="dropdown-item text-warning" href="#">Techno</a>
+                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardstyle' }) }}">Hardstyle</a>
+                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardtrance' }) }}">Hard Trance</a>
+                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'techno' }) }}">Techno</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -29,7 +29,7 @@
     </div>
     <div class="d-flex justify-content-end">
         {% if app.user %}
-            <p class="m-lg-2">Bienvenue {{ app.user.username }} !</p>
+            <p class="m-lg-2 text-warning">Bienvenue {{ app.user.username }} !</p>
             <a href={{ path('app_logout') }}>
                 <button class="btn btn-warning mx-1">Se deconnecter</button>
             </a>
@@ -38,7 +38,7 @@
                 <button class="btn btn-warning mx-1">S'inscrire</button>
             </a>
             <a href={{ path('app_login') }}>
-                <button class="btn btn-primary mx-1">Se connecter</button>
+                <button class="btn btn-warning mx-1">Se connecter</button>
             </a>
         {% endif %}
     </div>
