@@ -17,27 +17,36 @@
             <article class="mt-2">{{ publication.description }}</article>
         </section>
         <section class="mt-2">
-            <h4>Commentaires :</h4>
             {% if app.user %}
                 <div class="mb-5">
                     {{ form_start(form) }}
                     {{ form_end(form) }}
                 </div>
             {% endif %}
-            {% for comment in publication.comments %}
+            <h4>Commentaires :</h4>
+            {% for comment in comments %}
                 <div class="card bg-dark bg-gradient mb-1">
                     <div class="row g-0">
                         <div class="col-md-2 p-2 rounded-start bg-warning text-dark">
-                            <p>{{ comment.user.username }}</p>
-                            <img class="rounded" src="https://media.craiyon.com/2025-04-17/7ymxGs5_SKmiQmAq1P3eCQ.webp" alt="cyberpunk char" width="100" height="100">
-                            <p>Membre depuis le : {{ comment.user.createdAt|date("d/m/Y") }}</p>
+                            <p class="text-center">{{ comment.user.username }}</p>
+                            <img class="img-fluid mx-auto d-block rounded"
+                                 src="https://media.craiyon.com/2025-04-17/7ymxGs5_SKmiQmAq1P3eCQ.webp"
+                                 alt="cyberpunk char" width="150" height="150">
+                            <p class="text-center">Membre depuis le : {{ comment.user.createdAt|date("d/m/Y") }}</p>
                         </div>
                         <div class="col-md-10 text-light">
                             <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p><i>publié le {{ comment.createdAt|date("d/m/Y") }} :</i></p>
+                                    {% if app.user.id == comment.user.id %}
+                                        <button class="btn btn-warning mx-1">Modifier</button>
+                                    {% endif %}
+                                </div>
                                 <p>{{ comment.description }}</p>
                                 {% for rating in comment.user.ratings %}
                                     {% if rating.publication.id == publication.id %}
-                                        <p>Note de l'évènement : {{ rating.notation }}</p>
+                                        <p class="position-absolute bottom-0 start-20"><i>Note accordée à l'évènement
+                                                : {{ rating.notation }}</i></p>
                                     {% endif %}
                                 {% endfor %}
                             </div>

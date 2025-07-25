@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Form\AddCommentForm;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,14 @@ final class PublicationController extends AbstractController
     public function show(
         string                 $id,
         PublicationRepository  $publicationRepository,
+        CommentRepository      $commentRepository,
         Request                $request,
         EntityManagerInterface $entityManager,
     ): Response
     {
         $publication = $publicationRepository->findOneBy(['id' => $id]);
+        $comments = $commentRepository->findBy(['publication' => $id], ['createdAt' => 'DESC']);
+
         if ($publication === null) {
             $this->addFlash('danger', 'Cette publication n\'existe pas !');
             return $this->redirectToRoute('app_home');
@@ -49,6 +53,7 @@ final class PublicationController extends AbstractController
             'id' => $publication->getId(),
             'form' => $form,
             'publication' => $publication,
+            'comments' => $comments,
         ]);
     }
 
