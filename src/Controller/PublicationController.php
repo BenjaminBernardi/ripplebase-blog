@@ -2,25 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Form\AddCommentForm;
 use App\Repository\CategoryRepository;
-use App\Repository\CommentRepository;
 use App\Repository\PublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 final class PublicationController extends AbstractController
 {
     #[Route('/publication/{id}', name: 'app_show_publication')]
     public function show(
-        string                $id,
-        PublicationRepository $publicationRepository,
-//        CommentRepository      $commentRepository,
-//        Request                $request,
-//        EntityManagerInterface $entityManager,
+        string                 $id,
+        PublicationRepository  $publicationRepository,
+        Request                $request,
+        EntityManagerInterface $entityManager,
     ): Response
     {
         $publication = $publicationRepository->findOneBy(['id' => $id]);
@@ -29,8 +28,26 @@ final class PublicationController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        $comment = new Comment();
+        $form = $this->createForm(AddCommentForm::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setPublication($publication);
+            $user = $this->getUser();
+            $comment->setUser($user);
+            $comment->setCreatedAt(new \DateTime());
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_show_publication', [
+                'id' => $publication->getId()
+            ]);
+        }
+
         return $this->render('publication/index.html.twig', [
             'id' => $publication->getId(),
+            'form' => $form,
             'publication' => $publication,
         ]);
     }

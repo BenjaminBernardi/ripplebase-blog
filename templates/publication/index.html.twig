@@ -17,6 +17,13 @@
             <article class="mt-2">{{ publication.description }}</article>
         </section>
         <section class="mt-2">
+            <h4>Commentaires :</h4>
+            {% if app.user %}
+                <div class="mb-5">
+                    {{ form_start(form) }}
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
             {% for comment in publication.comments %}
                 <div class="card bg-dark bg-gradient mb-1">
                     <div class="row g-0">
