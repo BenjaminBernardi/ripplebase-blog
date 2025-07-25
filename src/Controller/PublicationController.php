@@ -7,6 +7,7 @@ use App\Form\AddCommentForm;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PublicationRepository;
+use App\Repository\RatingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +21,14 @@ final class PublicationController extends AbstractController
         string                 $id,
         PublicationRepository  $publicationRepository,
         CommentRepository      $commentRepository,
+        RatingRepository       $ratingRepository,
         Request                $request,
         EntityManagerInterface $entityManager,
     ): Response
     {
         $publication = $publicationRepository->findOneBy(['id' => $id]);
         $comments = $commentRepository->findBy(['publication' => $id], ['createdAt' => 'DESC']);
+        $avgRatings = $ratingRepository->getAvgRatings($id);
 
         if ($publication === null) {
             $this->addFlash('danger', 'Cette publication n\'existe pas !');
@@ -54,6 +57,7 @@ final class PublicationController extends AbstractController
             'form' => $form,
             'publication' => $publication,
             'comments' => $comments,
+            'avgRatings' => $avgRatings,
         ]);
     }
 

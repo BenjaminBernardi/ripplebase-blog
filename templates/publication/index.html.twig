@@ -9,11 +9,16 @@
         <section>
             <h2 class="mb-4">{{ publication.title }}</h2>
             <img class="img-fluid rounded-top-5" src="{{ publication.imagePath }}" alt="{{ publication.title }}">
-            <p class="mt-2">Genre :
-                {% for categorie in publication.categories %}
-                    {{ categorie.tag }}
+            <div class="d-flex justify-content-between mt-2">
+                <p>Genre :
+                    {% for categorie in publication.categories %}
+                        {{ categorie.tag }}
+                    {% endfor %}
+                </p>
+                {% for avg in avgRatings %}
+                    <p>Moyenne des utilisateurs : {{ avg|round(1, 'ceil') }}</p>
                 {% endfor %}
-            </p>
+            </div>
             <article class="mt-2">{{ publication.description }}</article>
         </section>
         <section class="mt-2">
@@ -38,17 +43,29 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <p><i>publié le {{ comment.createdAt|date("d/m/Y") }} :</i></p>
-                                    {% if app.user.id == comment.user.id %}
-                                        <button class="btn btn-warning mx-1">Modifier</button>
+                                    {% if app.user %}
+                                        {% if app.user.id == comment.user.id %}
+                                            <div>
+                                                <button class="bg-warning rounded mx-1" href="#">Modifier</button>
+                                                <button class="bg-danger rounded mx-1" href="#">Supprimer</button>
+                                            </div>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                                 <p>{{ comment.description }}</p>
-                                {% for rating in comment.user.ratings %}
-                                    {% if rating.publication.id == publication.id %}
-                                        <p class="position-absolute bottom-0 start-20"><i>Note accordée à l'évènement
-                                                : {{ rating.notation }}</i></p>
-                                    {% endif %}
-                                {% endfor %}
+                                <div class="position-absolute bottom-0 start-20">
+                                    {% for rating in comment.user.ratings %}
+                                        {% if rating.publication.id == publication.id %}
+                                            <p><i>Note accordée à l'événement : ({{ rating.notation }})</i>
+                                            {% for i in 1..5 %}
+                                                {% if i <= rating.notation %}
+                                                    ⭐
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        </p>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
