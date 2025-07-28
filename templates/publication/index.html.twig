@@ -59,7 +59,7 @@
                                         {% if app.user.id == comment.user.id %}
                                             <div>
                                                 <a class="btn bg-warning rounded mx-1" href="#">Modifier</a>
-                                                <a class="btn bg-warning rounded mx-1" href="#">Supprimer</a>
+                                                <a class="btn bg-warning rounded mx-1" href="{{ path('app_delete_comment', {'id': comment.id}) }}">Supprimer</a>
                                             </div>
                                         {% endif %}
                                     {% endif %}

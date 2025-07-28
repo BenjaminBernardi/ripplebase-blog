@@ -96,4 +96,29 @@ final class PublicationController extends AbstractController
             'category' => $category,
         ]);
     }
+
+    #[Route('/delete-comment/{id}', name: 'app_delete_comment')]
+    public function deleteComment(
+        string                 $id,
+        CommentRepository      $commentRepository,
+        EntityManagerInterface $entityManager,
+    ): Response
+    {
+        $comment = $commentRepository->findOneBy(['id' => $id]);
+//        if ($comment === null) {
+//            $this->addFlash('danger', 'Ce commentaire n\'existe pas !');
+//            return $this->redirectToRoute('app_show_publication');
+//        }
+//        if ($comment->getUser()->getId() != $this->getUser()->getId()) {
+//            $this->addFlash('danger', 'Impossible de supprimer le commentaire !');
+//            return $this->redirectToRoute('app_show_publication');
+//        }
+
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this->render('publication/index.html.twig', [
+            'id' => $comment->getPublication()->getId()
+        ]);
+    }
 }
