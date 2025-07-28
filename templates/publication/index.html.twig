@@ -16,16 +16,23 @@
                     {% endfor %}
                 </p>
                 {% for avg in avgRatings %}
-                    <p>Moyenne des utilisateurs : {{ avg|round(1, 'ceil') }}</p>
+                    <p>Moyenne des utilisateurs ({{ avg|round(1, 'ceil') }}) :
+                        {% for i in 1..5 %}
+                            {% if avg >= i %}
+                                <i class="fa-solid fa-star text-warning"></i>
+                            {% elseif i - avg < 0.5 and i - avg > 0 %}
+                                <i class="fa-solid fa-star-half-stroke text-warning"></i>
+                            {% else %}
+                                <i class="fa-regular fa-star text-warning"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
                 {% endfor %}
             </div>
-            <article class="mt-2">{{ publication.description }}</article>
+            <article class="my-3">{{ publication.description }}</article>
         </section>
         <section class="mt-2">
             {% if app.user %}
-                {% for ratings in app.user.ratings %}
-                    {{ dump(ratings.publication) }}
-                {% endfor %}
                 <div class="mb-3">
                     {{ form_start(addRating) }}
                     {{ form_end(addRating) }}
@@ -41,9 +48,7 @@
                     <div class="row g-0">
                         <div class="col-md-2 p-2 rounded-start bg-warning text-dark">
                             <p class="text-center">{{ comment.user.username }}</p>
-                            <img class="img-fluid mx-auto d-block rounded"
-                                 src="https://media.craiyon.com/2025-04-17/7ymxGs5_SKmiQmAq1P3eCQ.webp"
-                                 alt="cyberpunk char" width="150" height="150">
+                            <img class="img-fluid mx-auto d-block rounded" src="https://media.craiyon.com/2025-04-17/7ymxGs5_SKmiQmAq1P3eCQ.webp"  alt="cyberpunk char" width="150" height="150">
                             <p class="text-center">Membre depuis le : {{ comment.user.createdAt|date("d/m/Y") }}</p>
                         </div>
                         <div class="col-md-10 text-light">
@@ -53,8 +58,8 @@
                                     {% if app.user %}
                                         {% if app.user.id == comment.user.id %}
                                             <div>
-                                                <button class="bg-warning rounded mx-1" href="#">Modifier</button>
-                                                <button class="bg-danger rounded mx-1" href="#">Supprimer</button>
+                                                <a class="btn bg-warning rounded mx-1" href="#">Modifier</a>
+                                                <a class="btn bg-warning rounded mx-1" href="#">Supprimer</a>
                                             </div>
                                         {% endif %}
                                     {% endif %}
@@ -63,14 +68,16 @@
                                 <div class="position-absolute bottom-0 start-20">
                                     {% for rating in comment.user.ratings %}
                                         {% if rating.publication.id == publication.id %}
-                                            <p><i>Note accordée à l'événement : ({{ rating.notation }})</i>
-                                            {% for i in 1..5 %}
-                                                {% if i <= rating.notation %}
-                                                    <i class="fa-solid fa-star text-warning"></i>
-                                                {% endif %}
-                                            {% endfor %}
+                                            <p><i>Note accordée à l'événement : </i>
+                                                {% for i in 1..5 %}
+                                                    {% if i <= rating.notation %}
+                                                        <i class="fa-solid fa-star text-warning"></i>
+                                                    {% else %}
+                                                        <i class="fa-regular fa-star text-warning"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </p>
                                         {% endif %}
-                                        </p>
                                     {% endfor %}
                                 </div>
                             </div>
