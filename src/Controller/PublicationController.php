@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Rating;
 use App\Form\AddCommentForm;
+use App\Form\AddRatingForm;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PublicationRepository;
@@ -36,10 +38,10 @@ final class PublicationController extends AbstractController
         }
 
         $comment = new Comment();
-        $form = $this->createForm(AddCommentForm::class, $comment);
-        $form->handleRequest($request);
+        $addComment = $this->createForm(AddCommentForm::class, $comment);
+        $addComment->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($addComment->isSubmitted() && $addComment->isValid()) {
             $comment->setPublication($publication);
             $user = $this->getUser();
             $comment->setUser($user);
@@ -52,9 +54,26 @@ final class PublicationController extends AbstractController
             ]);
         }
 
+        $rating = new Rating();
+        $addRating = $this->createForm(AddRatingForm::class, $rating);
+        $addRating->handleRequest($request);
+
+        if ($addRating->isSubmitted() && $addRating->isValid()) {
+            $rating->setPublication($publication);
+            $user = $this->getUser();
+            $rating->setUser($user);
+            $entityManager->persist($rating);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_show_publication', [
+                'id' => $publication->getId()
+            ]);
+        }
+
         return $this->render('publication/index.html.twig', [
             'id' => $publication->getId(),
-            'form' => $form,
+            'addComment' => $addComment,
+            'addRating' => $addRating,
             'publication' => $publication,
             'comments' => $comments,
             'avgRatings' => $avgRatings,

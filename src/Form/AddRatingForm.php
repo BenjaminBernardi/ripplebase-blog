@@ -2,25 +2,30 @@
 
 namespace App\Form;
 
-use App\Entity\Comment;
+use App\Entity\Rating;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
-class AddCommentForm extends AbstractType
+class AddRatingForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description', null, [
-                'label' => 'Votre commentaire',
+            ->add('notation', NumberType::class, [
+                'label' => 'Noter cet événement (1 à 5 étoiles)',
                 'attr' => [
-                    'class' => 'form-control bg-dark text-light'
+                    'class' => 'form-control bg-dark text-light',
+                ],
+                'constraints' => [
+                    new Range(min: 1, max: 5),
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter un commentaire',
+                'label' => 'Soumettre',
                 'attr' => [
                     'class' => 'btn btn-warning mt-2',
                 ]
@@ -30,7 +35,7 @@ class AddCommentForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Comment::class,
+            'data_class' => Rating::class,
         ]);
     }
 }
