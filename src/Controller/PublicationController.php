@@ -105,20 +105,21 @@ final class PublicationController extends AbstractController
     ): Response
     {
         $comment = $commentRepository->findOneBy(['id' => $id]);
-//        if ($comment === null) {
-//            $this->addFlash('danger', 'Ce commentaire n\'existe pas !');
-//            return $this->redirectToRoute('app_show_publication');
-//        }
-//        if ($comment->getUser()->getId() != $this->getUser()->getId()) {
-//            $this->addFlash('danger', 'Impossible de supprimer le commentaire !');
-//            return $this->redirectToRoute('app_show_publication');
-//        }
+        if ($comment === null) {
+            $this->addFlash('danger', 'Ce commentaire n\'existe pas !');
+            return $this->redirectToRoute('app_show_publication');
+        }
+        if ($comment->getUser()->getId() != $this->getUser()->getId()) {
+            $this->addFlash('danger', 'Impossible de supprimer le commentaire !');
+            return $this->redirectToRoute('app_show_publication');
+        }
 
+        $id = $comment->getPublication()->getId();
         $entityManager->remove($comment);
         $entityManager->flush();
 
-        return $this->render('publication/index.html.twig', [
-            'id' => $comment->getPublication()->getId()
+        return $this->redirectToRoute('app_show_publication', [
+            'id' => $id
         ]);
     }
 }
