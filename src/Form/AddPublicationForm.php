@@ -52,7 +52,7 @@ class AddPublicationForm extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter un commentaire',
+                'label' => 'Ajouter / Modifier',
                 'attr' => [
                     'class' => 'btn btn-warning mt-2',
                 ]

@@ -42,7 +42,6 @@ final class AdminPublicationController extends AbstractController
         $publication = new Publication();
         $form = $this->createForm(AddPublicationForm::class, $publication);
         $form->handleRequest($request);
-        dump($publication);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $publication->setCreatedAt(new \DateTime());
@@ -50,6 +49,37 @@ final class AdminPublicationController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Publication ajoutée à la base !');
+            return $this->redirectToRoute('app_admin_publication');
+        }
+
+        return $this->render('admin_publication/add_publication.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/admin/publication/editer/{id}', name: 'app_admin_publication_edit', methods: ['GET', 'POST'])]
+    public function editPublication(
+        string                 $id,
+        PublicationRepository  $publicationRepository,
+        Request                $request,
+        EntityManagerInterface $entityManager,
+    ): Response
+    {
+        $publication = $publicationRepository->findOneBy(['id' => $id]);
+        if ($publication === null) {
+            $this->addFlash('danger', 'Cette publication n\'existe pas !');
+            return $this->redirectToRoute('app_admin_publication');
+        }
+
+        $form = $this->createForm(AddPublicationForm::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $publication->setCreatedAt(new \DateTime());
+            $entityManager->persist($publication);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Publication modifiée avec succès !');
             return $this->redirectToRoute('app_admin_publication');
         }
 
