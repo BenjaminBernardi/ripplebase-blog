@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Publication;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -38,6 +40,15 @@ class AddPublicationForm extends AbstractType
                 'label' => 'Date de publication',
                 'attr' => [
                     'class' => 'form-control bg-dark text-light my-2',
+                ]
+            ])
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'tag',
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'my-2',
                 ]
             ])
             ->add('submit', SubmitType::class, [
