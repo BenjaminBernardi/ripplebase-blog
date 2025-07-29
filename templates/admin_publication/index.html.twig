@@ -27,7 +27,7 @@
                             <div class="d-flex flex-row justify-content-evenly">
                                 <a class="text-light" href="{{ path('app_show_publication', {'id': publication.id}) }}"><i class="fa-regular fa-eye"></i></a>
                                 <a class="text-light" href="{{ path('app_admin_publication_edit', {'id': publication.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-                                <a class="text-light" href="#"><i class="fa-solid fa-trash"></i></a>
+                                <a class="text-light" href="{{ path('app_admin_publication_delete', {'id': publication.id}) }}"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>

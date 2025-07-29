@@ -87,4 +87,23 @@ final class AdminPublicationController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/admin/publication/supprimer/{id}', name: 'app_admin_publication_delete', methods: ['GET', 'POST'])]
+    public function deletePublication(
+        string                 $id,
+        PublicationRepository  $publicationRepository,
+        EntityManagerInterface $entityManager,
+    ): Response
+    {
+        $publication = $publicationRepository->findOneBy(['id' => $id]);
+        if ($publication === null) {
+            $this->addFlash('danger', 'Cette publication n\'existe pas !');
+            return $this->redirectToRoute('app_admin_publication');
+        }
+
+        $entityManager->remove($publication);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_publication');
+    }
 }
