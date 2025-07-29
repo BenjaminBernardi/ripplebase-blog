@@ -1,45 +1,51 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
-    <a class="navbar-brand" href="{{ path('app_home') }}">
-        <img src="{{ asset("/assets/img/rbase_logo.png") }}" width="50" height="50" alt="Ripplebase logo" class="m-lg-2">
-    </a>
+    <div class="d-flex justify-content-start align-items-center">
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset("/assets/img/rbase_logo.png") }}" width="50" height="50" alt="Ripplebase logo"
+                 class="m-lg-2">
+        </a>
+        {% if app.user %}
+            <p class="m-lg-2 text-warning">Bienvenue {{ app.user.username }} !</p>
+        {% endif %}
+    </div>
     <div>
         <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item active mx-1">
                 <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown mx-1">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false"
                 >
                     Genres
                 </a>
-                <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu bg-dark mx-1" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardstyle' }) }}">Hardstyle</a>
-                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardtrance' }) }}">Hard Trance</a>
-                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'techno' }) }}">Techno</a>
+                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardtrance' }) }}">Hard
+                        Trance</a>
+                    <a class="dropdown-item text-warning"
+                       href="{{ path('app_category', {'slug': 'techno' }) }}">Techno</a>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-1">
                 <a class="nav-link" href="{{ path('app_about_us') }}">A propos</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-1">
                 <a class="nav-link" href="#">Contact</a>
             </li>
         </ul>
     </div>
     <div class="d-flex justify-content-end">
         {% if app.user %}
-            <p class="m-lg-2 text-warning">Bienvenue {{ app.user.username }} !</p>
-            <a href={{ path('app_logout') }}>
-                <button class="btn btn-warning mx-1">Se deconnecter</button>
-            </a>
+            {% for role in app.user.roles %}
+                {% if role == 'ROLE_ADMIN' %}
+                    <a class="btn btn-warning mx-1" href="{{ path('app_admin_publication') }}">Administration</a>
+                {% endif %}
+            {% endfor %}
+            <a class="btn btn-warning mx-1" href={{ path('app_logout') }}>Se deconnecter</a>
         {% else %}
-            <a href={{ path('app_register') }}>
-                <button class="btn btn-warning mx-1">S'inscrire</button>
-            </a>
-            <a href={{ path('app_login') }}>
-                <button class="btn btn-warning mx-1">Se connecter</button>
-            </a>
+            <a class="btn btn-warning mx-1" href={{ path('app_register') }}>S'inscrire</a>
+            <a class="btn btn-warning mx-1" href={{ path('app_login') }}>Se connecter</a>
         {% endif %}
     </div>
     {% block header %}{% endblock %}
