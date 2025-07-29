@@ -97,6 +97,43 @@ final class PublicationController extends AbstractController
         ]);
     }
 
+//    #[Route('/edit-comment/{id}', name: 'app_edit_comment')]
+//    public function editComment(
+//        string                 $id,
+//        CommentRepository      $commentRepository,
+//        Request                $request,
+//        EntityManagerInterface $entityManager,
+//    ): Response
+//    {
+//        $comment = $commentRepository->findOneBy(['id' => $id]);
+//        if ($comment === null) {
+//            $this->addFlash('danger', 'Ce commentaire n\'existe pas !');
+//            return $this->redirectToRoute('app_show_publication');
+//        }
+//        if ($comment->getUser()->getId() != $this->getUser()->getId()) {
+//            $this->addFlash('danger', 'Impossible de modifier ce commentaire !');
+//            return $this->redirectToRoute('app_show_publication');
+//        }
+//
+//        $id = $comment->getPublication()->getId();
+//        $form = $this->createForm(AddCommentForm::class, $comment);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $comment->setCreatedAt(new \DateTime());
+//            $entityManager->persist($comment);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('app_show_publication', [
+//                'id' => $id
+//            ]);
+//        }
+//
+//        return $this->render('', [
+//            'addComment' => $form,
+//        ]);
+//    }
+
     #[Route('/delete-comment/{id}', name: 'app_delete_comment')]
     public function deleteComment(
         string                 $id,

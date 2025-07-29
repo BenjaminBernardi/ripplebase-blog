@@ -16,7 +16,7 @@ class AddCommentForm extends AbstractType
             ->add('description', null, [
                 'label' => 'Votre commentaire',
                 'attr' => [
-                    'class' => 'form-control bg-dark text-light'
+                    'class' => 'form-control bg-dark text-light',
                 ]
             ])
             ->add('submit', SubmitType::class, [

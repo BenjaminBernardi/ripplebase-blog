@@ -5,44 +5,37 @@
 {% block body %}
     <div class="container">
         <h1 class="text-center">Liste des publications</h1>
-        <div class="row table-responsive">
+        <div class="my-2">
+            <a class="btn btn-warning" href="{{ path('app_admin_publication_add') }}">Ajouter une publication</a>
+        </div>
+        <div class="row justify-content-center table-responsive">
             <table class="table table-dark table-striped align-middle">
                 <tr class="text-center">
-                    <th>Date de création</th>
-                    <th>Titre</th>
-                    <th>Description</th>
-                    <th>Date de publication</th>
-                    <th>Catégorie</th>
-                    <th>Action</th>
+                    <th class="col-1">Date de création</th>
+                    <th class="col-4">Titre</th>
+                    <th class="col-4">Description</th>
+                    <th class="col-1">Date de publication</th>
+                    <th class="col-2">Action</th>
                 </tr>
                 {% for publication in publications %}
-                    <tr>
+                    <tr class="text-center">
                         <td>{{ publication.createdAt|date("d/m/Y") }}</td>
-                        <td>{{ publication.title }}</td>
+                        <td>{{ publication.title|short_description }}</td>
                         <td>{{ publication.description|short_description }}</td>
                         <td>{{ publication.releasedAt|date("d/m/Y") }}</td>
-                        {% for categorie in publication.categories %}
-                            <td>{{ categorie.tag }}</td>
-                        {% endfor %}
                         <td>
-                            <div class="d-flex flex-row">
-                                <a href="#">
-                                    <button class="btn text-light">Editer</button>
-                                </a>
-                                {#                                <a href={{ path('app_show_game', {'slug': game.slug }) }}> #}
-                                {#                                    <button class="btn btn-primary">Voir</button> #}
-                                {#                                </a> #}
-                                {#                                <a href={{ path('app_admin_delete-game', {'slug': game.slug }) }}> #}
-                                {#                                    <button class="btn btn-danger">Supprimer</button> #}
-                                {#                                </a> #}
-                                {#                            </div> #}
+                            <div class="d-flex flex-row justify-content-evenly">
+                                <a class="text-light" href="{{ path('app_show_publication', {'id': publication.id}) }}"><i class="fa-regular fa-eye"></i></a>
+                                <a class="text-light" href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a class="text-light" href="#"><i class="fa-solid fa-trash"></i></a>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
             </table>
         </div>
         {# display navigation #}
-        <div class="navigation">
+        <div class="navigation d-flex justify-content-center my-2">
             {{ knp_pagination_render(publications) }}
         </div>
     </div>

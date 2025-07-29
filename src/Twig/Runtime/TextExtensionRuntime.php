@@ -13,6 +13,10 @@ class TextExtensionRuntime implements RuntimeExtensionInterface
 
     public function shortDescription(string $description): string
     {
-        return substr($description, 0, 50) . '...';
+        if (strlen($description) >= 80) {
+            return substr($description, 0, 80) . '...';
+        }
+
+        return $description;
     }
 }
