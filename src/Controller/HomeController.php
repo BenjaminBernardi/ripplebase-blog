@@ -20,7 +20,7 @@ final class HomeController extends AbstractController
         $lastPublications = $publicationRepository->findBy(
             [],
             ['releasedAt' => 'DESC'],
-            3
+            6
         );
 
         return $this->render('home/index.html.twig', [
