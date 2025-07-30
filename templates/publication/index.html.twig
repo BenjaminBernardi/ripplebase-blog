@@ -37,15 +37,8 @@
             {% if app.user %}
 
                 {# Fonction twig qui vérifie si l'utilisateur connecté a un rating actif sur la publication en cours #}
-                {% set has_user_rate_publication = false %}
-                {% for rating in app.user.ratings %}
-                    {% if rating.publication.id == publication.id %}
-                        {% set has_user_rate_publication = true %}
-                    {% endif %}
-                {% endfor %}
-
-                {% if has_user_rate_publication == true %}
-                    <a class="btn btn-warning mb-3">Modifier ma note</a>
+                {% if has_user_rate_publication(app.user, publication) %}
+                    <a class="btn btn-warning mb-3" href="#">Modifier ma note</a>
                 {% else %}
                     <div class="mb-3">
                         {{ form_start(addRating) }}
