@@ -12,9 +12,12 @@ use App\Repository\PublicationRepository;
 use App\Repository\RatingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class PublicationController extends AbstractController
 {
@@ -97,42 +100,31 @@ final class PublicationController extends AbstractController
         ]);
     }
 
-//    #[Route('/edit-comment/{id}', name: 'app_edit_comment')]
-//    public function editComment(
-//        string                 $id,
-//        CommentRepository      $commentRepository,
-//        Request                $request,
-//        EntityManagerInterface $entityManager,
-//    ): Response
-//    {
-//        $comment = $commentRepository->findOneBy(['id' => $id]);
-//        if ($comment === null) {
-//            $this->addFlash('danger', 'Ce commentaire n\'existe pas !');
-//            return $this->redirectToRoute('app_show_publication');
-//        }
-//        if ($comment->getUser()->getId() != $this->getUser()->getId()) {
-//            $this->addFlash('danger', 'Impossible de modifier ce commentaire !');
-//            return $this->redirectToRoute('app_show_publication');
-//        }
-//
-//        $id = $comment->getPublication()->getId();
-//        $form = $this->createForm(AddCommentForm::class, $comment);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $comment->setCreatedAt(new \DateTime());
-//            $entityManager->persist($comment);
-//            $entityManager->flush();
-//
-//            return $this->redirectToRoute('app_show_publication', [
-//                'id' => $id
-//            ]);
-//        }
-//
-//        return $this->render('', [
-//            'addComment' => $form,
-//        ]);
-//    }
+    #[Route('/edit-comment/{id}', name: 'app_edit_comment', methods: ['POST'])]
+    public function editComment(
+        string                 $id,
+        CommentRepository      $commentRepository,
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface  $generator
+    ): JsonResponse
+    {
+        $redirect = $generator->generate('app_show_publication', ['id' => $id]);
+        if (null === $comment = $commentRepository->findOneBy(['id' => $id])) {
+            $this->addFlash('danger', 'Ce commentaire n\'existe pas !');
+            return new JsonResponse($redirect);
+        }
+
+        if ($comment->getUser()->getId() != $this->getUser()->getId()) {
+            $this->addFlash('danger', 'Impossible de modifier ce commentaire !');
+            return new JsonResponse($redirect);
+        }
+
+        $content = json_decode($request->getContent(), true);
+        $comment->setDescription($content['description']);
+        $entityManager->flush();
+        return new JsonResponse(true);
+    }
 
     #[Route('/delete-comment/{id}', name: 'app_delete_comment')]
     public function deleteComment(

@@ -35,6 +35,8 @@
         </section>
         <section class="mt-2">
             {% if app.user %}
+                {# Fonction twig qui vérifie si l'utilisateur connecté a un rating actif sur la publication en cours #}
+                {# has_user_rate_publication(app.user, publication) #}
                 <div class="mb-3">
                     {{ form_start(addRating) }}
                     {{ form_end(addRating) }}
@@ -64,14 +66,16 @@
                                     {% if app.user %}
                                         {% if app.user.id == comment.user.id %}
                                             <div>
-                                                <a class="btn bg-warning mx-1" href="#">Modifier</a>
+                                                <button class="btn bg-warning mx-1" data-btn-update="{{ comment.id }}">
+                                                    Modifier
+                                                </button>
                                                 <a class="btn bg-warning mx-1"
                                                    href="{{ path('app_delete_comment', {'id': comment.id}) }}">Supprimer</a>
                                             </div>
                                         {% endif %}
                                     {% endif %}
                                 </div>
-                                <p>{{ comment.description }}</p>
+                                <p data-text-update="{{ comment.id }}">{{ comment.description }}</p>
                                 <div class="position-absolute bottom-0 start-20">
                                     {% for rating in comment.user.ratings %}
                                         {% if rating.publication.id == publication.id %}
