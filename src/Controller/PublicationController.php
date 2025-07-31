@@ -59,10 +59,9 @@ final class PublicationController extends AbstractController
         // $rating = récupère l'entité rating entre une publication et le user connecté
         $userId = $this->getUser()->getId();
         $rating = $ratingRepository->getUserRate($userId, $id);
-        // si elle existe ok on garde
-        if ($rating != null) {
-            $databaseRate = $rating;
-        } else { // SINON : $rating = new Rating();
+        // si elle existe : ok on garde
+        // SINON : $rating = new Rating();
+        if ($rating === null) {
             $rating = new Rating();
         }
 
