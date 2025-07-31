@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class PublicationController extends AbstractController
@@ -57,7 +56,16 @@ final class PublicationController extends AbstractController
             ]);
         }
 
-        $rating = new Rating();
+        // $rating = récupère l'entité rating entre une publication et le user connecté
+        $userId = $this->getUser()->getId();
+        $rating = $ratingRepository->getUserRate($userId, $id);
+        // si elle existe ok on garde
+        if ($rating != null) {
+            $databaseRate = $rating;
+        } else { // SINON : $rating = new Rating();
+            $rating = new Rating();
+        }
+
         $addRating = $this->createForm(AddRatingForm::class, $rating);
         $addRating->handleRequest($request);
 

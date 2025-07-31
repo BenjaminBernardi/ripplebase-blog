@@ -27,6 +27,8 @@
                                     <i class="fa-regular fa-star text-warning"></i>
                                 {% endif %}
                             {% endfor %}
+
+                            {#                            {% include 'front/partial/stars' with {'note': 5} %} #}
                         </p>
                     {% endif %}
                 {% endfor %}
@@ -35,16 +37,10 @@
         </section>
         <section class="mt-2">
             {% if app.user %}
-
-                {# Fonction twig qui vérifie si l'utilisateur connecté a un rating actif sur la publication en cours #}
-                {% if has_user_rate_publication(app.user, publication) %}
-                    <a class="btn btn-warning mb-3" href="#">Modifier ma note</a>
-                {% else %}
-                    <div class="mb-3">
-                        {{ form_start(addRating) }}
-                        {{ form_end(addRating) }}
-                    </div>
-                {% endif %}
+                <div class="mb-3">
+                    {{ form_start(addRating) }}
+                    {{ form_end(addRating) }}
+                </div>
                 <div class="mb-3">
                     {{ form_start(addComment) }}
                     {{ form_end(addComment) }}
@@ -70,8 +66,11 @@
                                     {% if app.user %}
                                         {% if app.user.id == comment.user.id %}
                                             <div>
-                                                <button class="btn bg-warning mx-1" data-btn-update="{{ comment.id }}">Modifier</button>
-                                                <a class="btn bg-warning mx-1" href="{{ path('app_delete_comment', {'id': comment.id}) }}">Supprimer</a>
+                                                <button class="btn bg-warning mx-1" data-btn-update="{{ comment.id }}">
+                                                    Modifier
+                                                </button>
+                                                <a class="btn bg-warning mx-1"
+                                                   href="{{ path('app_delete_comment', {'id': comment.id}) }}">Supprimer</a>
                                             </div>
                                         {% endif %}
                                     {% endif %}

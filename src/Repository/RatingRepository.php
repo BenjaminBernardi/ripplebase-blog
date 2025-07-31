@@ -26,4 +26,17 @@ class RatingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getUserRate(string $userId, string $publicationId)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.user', 'u')
+            ->join('r.publication', 'p')
+            ->where('u.id = :userId')
+            ->andWhere('p.id = :publicationId')
+            ->setParameter('userId', $userId)
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
