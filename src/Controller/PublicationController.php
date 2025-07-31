@@ -158,30 +158,4 @@ final class PublicationController extends AbstractController
             'id' => $id
         ]);
     }
-
-    #[Route('/delete-rating/{id}', name: 'app_delete_rating')]
-    public function deleteRating(
-        string                 $id,
-        RatingRepository       $ratingRepository,
-        EntityManagerInterface $entityManager,
-    ): Response
-    {
-        $rating = $ratingRepository->findOneBy(['id' => $id]);
-        if ($rating === null) {
-            $this->addFlash('danger', 'Cette note n\'existe pas !');
-            return $this->redirectToRoute('app_show_publication');
-        }
-        if ($rating->getUser()->getId() != $this->getUser()->getId()) {
-            $this->addFlash('danger', 'Impossible de supprimer la note !');
-            return $this->redirectToRoute('app_show_publication');
-        }
-
-        $id = $rating->getPublication()->getId();
-        $entityManager->remove($rating);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_show_publication', [
-            'id' => $id
-        ]);
-    }
 }

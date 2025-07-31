@@ -17,19 +17,8 @@
                 </p>
                 {% for avg in avgRatings %}
                     {% if avg != 0 %}
-                        <p>Moyenne des utilisateurs ({{ avg|round(1, 'ceil') }}) :
-                            {% for i in 1..5 %}
-                                {% if avg >= i %}
-                                    <i class="fa-solid fa-star text-warning"></i>
-                                {% elseif i - avg <= 0.5 and i - avg > 0 %}
-                                    <i class="fa-solid fa-star-half-stroke text-warning"></i>
-                                {% else %}
-                                    <i class="fa-regular fa-star text-warning"></i>
-                                {% endif %}
-                            {% endfor %}
-
-                            {#                            {% include 'front/partial/stars' with {'note': 5} %} #}
-                        </p>
+                        <p>Moyenne des utilisateurs ({{ avg|round(1, 'ceil') }})
+                            :{% include 'partials/stars.html.twig' with {'note': avg} %}</p>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -79,14 +68,8 @@
                                 <div class="position-absolute bottom-0 start-20">
                                     {% for rating in comment.user.ratings %}
                                         {% if rating.publication.id == publication.id %}
-                                            <p><i>Note accordée à l'événement : </i>
-                                                {% for i in 1..5 %}
-                                                    {% if i <= rating.notation %}
-                                                        <i class="fa-solid fa-star text-warning"></i>
-                                                    {% else %}
-                                                        <i class="fa-regular fa-star text-warning"></i>
-                                                    {% endif %}
-                                                {% endfor %}
+                                            <p><i>Note accordée à l'événement
+                                                    :{% include 'partials/stars.html.twig' with {'note': rating.notation} %}</i>
                                             </p>
                                         {% endif %}
                                     {% endfor %}
