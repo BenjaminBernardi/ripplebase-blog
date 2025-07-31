@@ -22,12 +22,12 @@ final class AdminPublicationController extends AbstractController
     ): Response
     {
         $publications = $paginator->paginate(
-            $publicationRepository->getAll(), // Join Category Order by releasedAt DESC
+            $publicationRepository->getAll(),
             $request->query->getInt('page', 1),
             10
         );
 
-        return $this->render('admin_publication/index.html.twig', [
+        return $this->render('Admin/admin_publication/index.html.twig', [
             'controller_name' => 'AdminPublicationController',
             'publications' => $publications
         ]);
@@ -52,7 +52,7 @@ final class AdminPublicationController extends AbstractController
             return $this->redirectToRoute('app_admin_publication');
         }
 
-        return $this->render('admin_publication/add_publication.html.twig', [
+        return $this->render('Admin/admin_publication/add_publication.html.twig', [
             'form' => $form,
         ]);
     }
@@ -83,7 +83,7 @@ final class AdminPublicationController extends AbstractController
             return $this->redirectToRoute('app_admin_publication');
         }
 
-        return $this->render('admin_publication/add_publication.html.twig', [
+        return $this->render('Admin/admin_publication/add_publication.html.twig', [
             'form' => $form,
         ]);
     }
