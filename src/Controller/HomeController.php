@@ -14,14 +14,12 @@ final class HomeController extends AbstractController
         PublicationRepository $publicationRepository
     ): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $lastPublications = $publicationRepository->findBy(
             [],
             ['releasedAt' => 'DESC'],
             6
         );
+
 
         return $this->render('home/index.html.twig', [
             'lastPublications' => $lastPublications,

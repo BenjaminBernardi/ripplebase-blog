@@ -21,4 +21,5 @@ class PublicationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->orderBy('p.releasedAt', 'DESC');
     }
+
 }
