@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
