@@ -7,6 +7,18 @@
     <div class="container">
         <h1 class="text-center">Ajouter une publication</h1>
         {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.imagePath) }}
+        {{ form_row(form.releasedAt) }}
+        <div class="d-flex">
+            {% for category in form.categories %}
+                <div class="form-check me-3">
+                    {{ form_widget(category, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(category, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                </div>
+            {% endfor %}
+        </div>
         {{ form_end(form) }}
     </div>
 
