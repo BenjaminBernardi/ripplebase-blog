@@ -4,17 +4,10 @@
 
 {% block body %}
 
-    {% include 'partials/navbar.html.twig' %}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+    {% include 'partials/alert.html.twig' %}
 
     <div class="container">
-        <h1 class="text-center">Ripplebase Blog</h1>
+        <h1 class="text-center mt-2">Ripplebase Blog</h1>
 
         {% include 'partials/_publication_loop.html.twig' with {
             'title': 'Nos derniers événements',
