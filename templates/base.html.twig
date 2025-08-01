@@ -18,26 +18,28 @@
     {% include 'partials/navbar.html.twig' %}
 {% endblock %}
 
+<main>
 {% block body %}{% endblock %}
+</main>
 
 {% block footer %}
-    <footer class="d-flex flex-wrap justify-content-between align-items-center bg-dark py-3 my-4 border-top">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center bg-dark py-3 mt-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" aria-label="Bootstrap">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" aria-label="Ripplebase logo">
                 <img src="{{ asset("/assets/img/rbase_logo.png") }}" width="40" height="40" alt="Ripplebase logo"
                      class="m-lg-2">
             </a>
             <span class="mb-3 mb-md-0 text-light">© 2025 Ripplebase Corp.</span>
         </div>
-        <ul class="nav col-md-4 justify-content-end d-flex">
+        <ul class="nav col-md-4 justify-content-end d-flex me-2">
             <li class="ms-3">
-                <a href="#" aria-label="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
+                <a href="https://www.instagram.com/ripplebase/" aria-label="Instagram">
+                    <img src="{{ asset('/assets/img/instagram.png') }}" width="40" height="40" alt="Instagram">
                 </a>
             </li>
             <li class="ms-3">
-                <a href="#" aria-label="Facebook">
-
+                <a href="https://www.twitch.tv/ripplebase" aria-label="Twitch">
+                    <img src="{{ asset('/assets/img/twitch.png') }}" width="40" height="40" alt="Twitch">
                 </a>
             </li>
         </ul>
