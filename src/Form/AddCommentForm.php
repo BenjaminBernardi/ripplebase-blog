@@ -22,7 +22,7 @@ class AddCommentForm extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter un commentaire',
                 'attr' => [
-                    'class' => 'btn btn-warning mt-2',
+                    'class' => 'btn bg-yellow-ripple mt-2',
                 ]
             ]);
     }

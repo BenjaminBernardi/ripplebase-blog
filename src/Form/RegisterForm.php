@@ -45,7 +45,7 @@ class RegisterForm extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider mon inscription',
                 'attr' => [
-                    'class' => 'btn btn-warning mt-3',
+                    'class' => 'btn bg-yellow-ripple mt-3',
                 ]
             ])
         ;

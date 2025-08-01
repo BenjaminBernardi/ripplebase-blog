@@ -39,7 +39,7 @@
             {% for comment in comments %}
                 <div class="card bg-dark bg-gradient mb-1">
                     <div class="row g-0">
-                        <div class="col-md-2 p-2 rounded-start bg-warning text-dark">
+                        <div class="col-md-2 p-2 rounded-start bg-yellow-ripple text-dark">
                             <p class="text-center">{{ comment.user.username }}</p>
                             <img class="img-fluid mx-auto d-block rounded"
                                  src="https://media.craiyon.com/2025-04-17/7ymxGs5_SKmiQmAq1P3eCQ.webp"
@@ -53,16 +53,16 @@
                                     {% if app.user %}
                                         {% if app.user.id == comment.user.id %}
                                             <div>
-                                                <button class="btn bg-warning mx-1" data-btn-update="{{ comment.id }}">
+                                                <button class="btn bg-yellow-ripple mx-1" data-btn-update="{{ comment.id }}">
                                                     Modifier
                                                 </button>
-                                                <a class="btn bg-warning mx-1"
+                                                <a class="btn bg-yellow-ripple mx-1"
                                                    href="{{ path('app_delete_comment', {'id': comment.id}) }}">Supprimer</a>
                                             </div>
                                         {% endif %}
                                     {% endif %}
                                 </div>
-                                <p data-text-update="{{ comment.id }}">{{ comment.description }}</p>
+                                <p data-text-update="{{ comment.id }}">"{{ comment.description }}"</p>
                                 <div class="position-absolute bottom-0 start-20">
                                     {% for rating in comment.user.ratings %}
                                         {% if rating.publication.id == publication.id %}

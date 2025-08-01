@@ -1,9 +1,9 @@
 {% for i in 1..5 %}
     {% if note >= i %}
-        <i class="fa-solid fa-star text-warning"></i>
+        <i class="fa-solid fa-star yellow-ripple"></i>
     {% elseif i - note <= 0.5 and i - note > 0 %}
-        <i class="fa-solid fa-star-half-stroke text-warning"></i>
+        <i class="fa-solid fa-star-half-stroke yellow-ripple"></i>
     {% else %}
-        <i class="fa-regular fa-star text-warning"></i>
+        <i class="fa-regular fa-star yellow-ripple"></i>
     {% endif %}
 {% endfor %}

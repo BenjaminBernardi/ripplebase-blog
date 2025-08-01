@@ -5,7 +5,7 @@
                  class="m-lg-2">
         </a>
         {% if app.user %}
-            <p class="m-lg-2 text-warning">Bienvenue {{ app.user.username }} !</p>
+            <p class="m-lg-2 yellow-ripple">Bienvenue {{ app.user.username }} !</p>
         {% endif %}
     </div>
     <div>
@@ -20,10 +20,10 @@
                     Genres
                 </a>
                 <div class="dropdown-menu bg-dark mx-2" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardstyle' }) }}">Hardstyle</a>
-                    <a class="dropdown-item text-warning" href="{{ path('app_category', {'slug': 'hardtrance' }) }}">Hard
+                    <a class="dropdown-item yellow-ripple" href="{{ path('app_category', {'slug': 'hardstyle' }) }}">Hardstyle</a>
+                    <a class="dropdown-item yellow-ripple" href="{{ path('app_category', {'slug': 'hardtrance' }) }}">Hard
                         Trance</a>
-                    <a class="dropdown-item text-warning"
+                    <a class="dropdown-item yellow-ripple"
                        href="{{ path('app_category', {'slug': 'techno' }) }}">Techno</a>
                 </div>
             </li>
@@ -39,13 +39,13 @@
         {% if app.user %}
             {% for role in app.user.roles %}
                 {% if role == 'ROLE_ADMIN' %}
-                    <a class="btn btn-warning mx-1" href="{{ path('app_admin_publication') }}">Administration</a>
+                    <a class="btn bg-yellow-ripple mx-1" href="{{ path('app_admin_publication') }}">Administration</a>
                 {% endif %}
             {% endfor %}
-            <a class="btn btn-warning mx-1" href={{ path('app_logout') }}>Se deconnecter</a>
+            <a class="btn bg-yellow-ripple mx-1" href={{ path('app_logout') }}>Se deconnecter</a>
         {% else %}
-            <a class="btn btn-warning mx-1" href={{ path('app_register') }}>S'inscrire</a>
-            <a class="btn btn-warning mx-1" href={{ path('app_login') }}>Se connecter</a>
+            <a class="btn bg-yellow-ripple mx-1" href={{ path('app_register') }}>S'inscrire</a>
+            <a class="btn bg-yellow-ripple" href={{ path('app_login') }}>Se connecter</a>
         {% endif %}
     </div>
     {% block header %}{% endblock %}

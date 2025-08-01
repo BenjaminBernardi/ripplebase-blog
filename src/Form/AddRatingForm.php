@@ -27,7 +27,7 @@ class AddRatingForm extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Soumettre',
                 'attr' => [
-                    'class' => 'btn btn-warning mt-2',
+                    'class' => 'btn bg-yellow-ripple mt-2',
                 ]
             ]);
     }
